@@ -27,7 +27,7 @@ const formSchema = z.object({
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') || '/crm';
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

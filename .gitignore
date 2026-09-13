@@ -48,3 +48,7 @@ next-env.d.ts
 server.log
 /logs/
 /.mimosa
+
+# portable MySQL (local dev database)
+/.mysql/
+/mysql-*.zip

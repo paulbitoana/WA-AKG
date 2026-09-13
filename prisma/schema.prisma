@@ -49,6 +49,8 @@ model User {
   webhooks  Webhook[]
   notifications Notification[]
   sessionAccesses SessionAccess[]
+  crmClients    CrmClient[]
+  crmProperties CrmProperty[]
 }
 
 model Session {
@@ -389,4 +391,56 @@ model BroadcastRecipient {
   broadcastLog    BroadcastLog @relation(fields: [broadcastLogId], references: [id], onDelete: Cascade)
 
   @@index([broadcastLogId])
+}
+
+// CRM — clients receiving property listings over WhatsApp
+model CrmClient {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  email     String?
+  phone     String   // Normalized digits with country code, e.g. 40740123456
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sends  PropertySend[]
+
+  @@unique([userId, phone])
+  @@index([userId])
+}
+
+// CRM — property listings shared with clients
+model CrmProperty {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?  @db.Text
+  price       Float?
+  currency    String   @default("EUR")
+  images      Json?    // Array of stored filenames in data/media/crm
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sends  PropertySend[]
+
+  @@index([userId])
+}
+
+// CRM — history of property listings sent to clients
+model PropertySend {
+  id         String   @id @default(cuid())
+  clientId   String
+  propertyId String
+  sessionId  String   // WA session id string used to send
+  status     String   @default("SENT") // SENT, FAILED
+  error      String?  @db.Text
+  sentAt     DateTime @default(now())
+
+  client   CrmClient   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  property CrmProperty @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([propertyId])
 }

@@ -9,6 +9,8 @@
     "start": "NODE_ENV=production npx tsx src/server/index.ts",
     "lint": "eslint",
     "db:push": "prisma db push && prisma generate",
+    "db:start": "scripts\\start-db.bat",
+    "db:stop": "scripts\\stop-db.bat",
     "db:studio": "prisma studio",
     "make-admin": "node scripts/setup-admin.js",
     "postinstall": "patch-package"
@@ -91,5 +93,18 @@
     "wa-sticker-formatter": {
       "sharp": "$sharp"
     }
+  },
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "@whiskeysockets/baileys@7.0.0-rc.9": true,
+    "prisma@5.22.0": true,
+    "sharp@0.34.5": true,
+    "esbuild@0.27.2": true,
+    "protobufjs@6.8.8": true,
+    "protobufjs@7.5.4": true,
+    "core-js-pure@3.47.0": true,
+    "postinstall-postinstall@2.1.0": true,
+    "unrs-resolver@1.11.1": true
   }
 }

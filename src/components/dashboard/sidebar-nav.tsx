@@ -27,7 +27,8 @@ import {
     Tag,
     MessageCircleReply,
     Contact,
-    UserPlus
+    UserPlus,
+    Building2
 } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
 import {
@@ -62,6 +63,7 @@ const navGroups: NavGroup[] = [
     {
         label: "Messaging",
         items: [
+            { href: "/crm", label: "CRM Imobile", icon: Building2 },
             { href: "/dashboard/chat", label: "Chat", icon: MessageSquare },
             { href: "/dashboard/broadcast", label: "Broadcast", icon: Megaphone },
             { href: "/dashboard/sticker", label: "Sticker Maker", icon: ImageIcon },
